@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificador Par ou Ímpar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #510765 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 400px;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+        
+        .input-container {
+            margin-bottom: 20px;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        input:focus {
+            border-color: #6a11cb;
+        }
+        
+        button {
+            background: linear-gradient(to right, #6a11cb, #09058e);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        #resultado {
+            min-height: 50px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f5f5f5;
+            border: 2px solid #ddd;
+            color: #333;
+        }
+        
+        .par {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border-color: #4caf50;
+        }
+        
+        .impar {
+            background-color: #ffebee;
+            color: #c62828;
+            border-color: #f44336;
+        }
+        
+        .erro {
+            background-color: #fff3e0;
+            color: #ef6c00;
+            border-color: #ff9800;
+        }
+        
+        .dica {
+            font-size: 14px;
+            color: #666;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Verificador de Números</h1>
+        
+        <div class="input-container">
+            <input type="number" id="numero" placeholder="Digite um número inteiro">
+            <button onclick="verificar()">Verificar</button>
+        </div>
+        
+        <p id="resultado">Resultado aparecerá aqui</p>
+        
+    </div>
+    <script>
+        function verificar() {
+            const inputVal = document.getElementById("numero").value;
+            const resultado = document.getElementById("resultado");
+            
+            // Resetar classes
+            resultado.className = "";
+            
+            // Verificar se o campo está vazio
+            if (inputVal === "") {
+                resultado.textContent = "Por favor, digite um número.";
+                resultado.classList.add("erro");
+                return;
+            }
+            
+            // Converter para número (usando parseFloat para aceitar decimais, mas verificaremos se é inteiro)
+            const n = parseFloat(inputVal);
+            
+            // Verificar se é um número válido
+            if (isNaN(n)) {
+                resultado.textContent = "Isso não é um número válido.";
+                resultado.classList.add("erro");
+                return;
+            }
+            
+            // Verificar se é um número inteiro
+            if (!Number.isInteger(n)) {
+                resultado.textContent = "Por favor, digite um número inteiro.";
+                resultado.classList.add("erro");
+                return;
+            }
+            
+            // Verificar se é par ou ímpar
+            if (n % 2 === 0) {
+                resultado.textContent = `O número ${n} é PAR.`;
+                resultado.classList.add("par");
+            } else {
+                resultado.textContent = `O número ${n} é ÍMPAR.`;
+                resultado.classList.add("impar");
+            }
+        }
+        
+        // Permitir verificação pressionando Enter
+        document.getElementById("numero").addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+                verificar();
+            }
+        });
+        
+        // Focar no campo de entrada quando a página carregar
+        window.onload = function() {
+            document.getElementById("numero").focus();
+        };
+    </script>
+</body>
+</html>
